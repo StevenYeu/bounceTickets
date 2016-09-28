@@ -44,6 +44,7 @@ $(document).ready(function () {
 				items.push("<td>")
 				for(i=0; i < valid[index].emailDates.length; i++) {
 					//var dates = valid[index].emailDates[i].toString();
+					// Not sure how the dates are formatted? Work on later
 					var dates = "TODO";
 					items.push(dates);
 				}
