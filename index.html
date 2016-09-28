@@ -21,8 +21,11 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
-
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
     <body>
@@ -32,12 +35,14 @@
           <div class="row">
 
               <div class="col-md-10 col-md-offset-1">
-
                   <div class="panel panel-default panel-table">
                     <div class="panel-heading">
                       <div class="row">
                         <div class="col col-xs-6">
                           <h3 class="panel-title">Valid Projects</h3>
+                        </div>
+                        <div class="col col-xs-6 text-right">
+                          <button type="button" class="btn btn-sm btn-primary btn-create" onclick="update()">Update</button>
                         </div>
                       </div>
                     </div>
@@ -55,19 +60,10 @@
                               <th>Types</th>
                           </tr>
                         </thead>
-                        <tbody id="table-body-valid">
-                                <tr>
-                                  <td align="center">
-                                    <a class="btn btn-default"><em class="fa fa-paper-plane-o"></em></a>
-                                  </td>
-                                  <td>Dropdown Menu</td>
-                                  <td>4</td>
-                                  <td>4 warnings</td>
-                                  <td>12,1235,12345,765</td>
-                                  <td>test@example.com</td>
-                                  <td>John Doe</td>
-                                  <td>Storage,Cloud</td>
-                                </tr>
+                        <tbody id="valid">
+                          <script>
+                            loadValidData("valid");
+                          </script>
                               </tbody>
                       </table>
 
@@ -90,7 +86,7 @@
                     <div class="panel-heading">
                       <div class="row">
                         <div class="col col-xs-6">
-                          <h3 class="panel-title">Weird Projects</h3>
+                          <h3 class="panel-title">Weird Tickets</h3>
                         </div>
                       </div>
                     </div>
@@ -99,29 +95,17 @@
                         <thead>
                           <tr>
                               <th><em class="fa fa-cog"></em></th>
-                              <th>Dates Flaged</th>
-                              <th>Number of Flags</th>
-                              <th>Status</th>
-                              <th>Tickets</th>
-                              <th>Email</th>
+                              <th>Ticket</th>
                               <th>Name</th>
-                              <th>Types</th>
+                              <th>Months</th>
+                              <th>Type</th>
                           </tr>
                         </thead>
-                        <tbody id="table-body-weird">
-                                <tr>
-                                  <td align="center">
-                                    <a class="btn btn-default"><em class="fa fa-paper-plane-o"></em></a>
-                                  </td>
-                                  <td>Dropdown Menu</td>
-                                  <td>4</td>
-                                  <td>4 warnings</td>
-                                  <td>12,1235,12345,765</td>
-                                  <td>test@example.com</td>
-                                  <td>John Doe</td>
-                                  <td>Storage,Cloud</td>
-                                </tr>
-                              </tbody>
+                        <tbody id="weird">
+                            <script>
+                              loadWeirdData();
+                            </script>
+                        </tbody>
                       </table>
 
 
@@ -131,39 +115,6 @@
                   </div>
 
       </div></div></div>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-        <script src="js/vendor/bootstrap.min.js"></script>
-
-        <script src="js/main.js"></script>
-
-
-
-        <script>
-        var jqxhr = $.getJSON( "http://holonet.sdsc.edu:8134/requestData", function(data) {
-            console.log( "success" );
-            console.log(data);
-            })
-
-          // var request = new XMLHttpRequest();
-          // var url = 'http://holonet.sdsc.edu:8134/requestData';
-          // var a_sync = true;
-          // request.onreadystatechange = function () {
-	        //      var status = request.status;
-	        //      var data = request.responseText;
-          //      console.log(status);
-          //      console.log(data);
-          //      //JSON.parse(data);
-          // }
-          // request.open("GET",url,a_sync);
-          // request.send();
-          // function parseData(data) {
-          // }
-        </script>
-
-
 
     </body>
 </html>
