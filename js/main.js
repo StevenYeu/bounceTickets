@@ -43,9 +43,10 @@ $(document).ready(function () {
 				// Add Dates
 				items.push("<td>")
 				for(i=0; i < valid[index].emailDates.length; i++) {
-					//var dates = valid[index].emailDates[i].toString();
-					// Not sure how the dates are formatted? Work on later
-					var dates = "TODO";
+					var unix = valid[index].emailDates[i];
+					var timestamp = moment.unix(unix);
+					var dates = timestamp.format("MM-DD-YYYY");
+					console.log(dates);
 					items.push(dates);
 				}
 				items.push("</td>");
