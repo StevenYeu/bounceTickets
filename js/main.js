@@ -21,10 +21,22 @@ $(document).ready(function () {
  });
 
  function update() {
-	 var json = $.getJSON( "http://holonet.sdsc.edu:8134/requestData", function(data){
+	 getToken();
+	 var url = "https://holonet.sdsc.edu:8134/requestData"
+	 var method = "GET";
+	 var a_sync = true;
+	 var request = new XMLHttpRequest();
+	 var token = localStorage.getItem("token");
+	 console.log(token);
+	 request.onload = function () {
+		 var data = request.responseText;
 		 processValidData(data);
 		 processWeirdData(data);
-	 });
+	 }
+	 request.open(method, url, a_sync);
+	 request.setRequestHeader('Authorization', token);
+	 request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	 request.send();
  }
 
  function processValidData(data) {
@@ -157,7 +169,8 @@ $(document).ready(function () {
 				console.log("BAD");
 				return;
 			}
- 		  return request.responseText;
+			var id = request.responseText;
+			localStorage.setItem("token",id);
  	 }
 
 	 request.open(method, url, a_sync);
