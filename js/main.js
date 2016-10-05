@@ -20,7 +20,7 @@ $(document).ready(function () {
 
  });
 
- function update() {
+ function load() {
 	 getToken();
 	 var url = "https://holonet.sdsc.edu:8134/requestData"
 	 var method = "GET";
@@ -29,7 +29,7 @@ $(document).ready(function () {
 	 var token = localStorage.getItem("token");
 	 console.log(token);
 	 request.onload = function () {
-		 var data = request.responseText;
+		 var data = JSON.parse(request.responseText);
 		 processValidData(data);
 		 processWeirdData(data);
 	 }
@@ -77,12 +77,14 @@ $(document).ready(function () {
 		 items.push("</td>");
 
 		 // Add Emails
-		 items.push("<td>");
-		 for(i=0; i < valid[index].contactEmail.length; i++) {
-			 var emails = valid[index].contactEmail[i].toString()+"\n";
-			 items.push(emails);
+		 if (valid[index].contactEmail != null) {
+		 	items.push("<td>");
+		 	for(i=0; i < valid[index].contactEmail.length; i++) {
+			 	var emails = valid[index].contactEmail[i].toString()+"\n";
+			 	items.push(emails);
+		 	}
+		 	items.push("</td>");
 		 }
-		 items.push("</td>");
 
 		 //Add Name
 		 items.push("<td class='name'>");
@@ -166,7 +168,6 @@ $(document).ready(function () {
  	 request.onload = function () {
  		  var status = request.status;
 			if (status == 401) {
-				console.log("BAD");
 				return;
 			}
 			var id = request.responseText;
@@ -184,7 +185,6 @@ $(document).ready(function () {
 $(document).on("click",".email" ,function() {
 	var $item = $(this).closest("tr").find(".name").text();
 	$(this).closest("tr").hide();
-	console.log(getToken());
 	var url = "http://holonet.sdsc.edu:8134/" + $item;
 	var method = "POST";
 	var a_sync = true;
