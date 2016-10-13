@@ -20,15 +20,28 @@ $(document).ready(function () {
 
  });
 
+  // Counter number of valid projects
+  var valCount = 0;
+  // Counter number of weird tickets
+  var wCount = 0;
+
+   function getNote(name,x) {
+ 	document.getElementById(name+'-count').innerHTML = x;
+ }
+
  function load() {
-	 getToken();
+	 // getToken();
 	 var url = "https://holonet.sdsc.edu:8134/requestData"
 	 var method = "GET";
 	 var a_sync = true;
 	 var request = new XMLHttpRequest();
-	 var token = localStorage.getItem("token");
-	 console.log(token);
+	 var token = localStorage.getItem("loginToken");
 	 request.onload = function () {
+	 	 var status = request.status;
+	 	 if (status == 401) {
+	 	 	window.location.href = "https://www.holonet.sdsc.edu:8134/projectCreation/login.html";
+	 	 	return;
+	 	 }
 		 var data = JSON.parse(request.responseText);
 		 processValidData(data);
 		 processWeirdData(data);
@@ -41,7 +54,10 @@ $(document).ready(function () {
 
  function processValidData(data) {
 	 valid = data.validProjects;
-	 $.each(valid, function(index) { //llop through each project
+	 var count = Object.keys(valid).length;
+	 getNote("valid",count);
+
+	 $.each(valid, function(index) { //loop through each project
 		 var items = [];
 		 items.push("<tr>");
 		 // Create Email Button
@@ -53,7 +69,6 @@ $(document).ready(function () {
 			 var unix = valid[index].emailDates[i];
 			 var timestamp = moment.unix(unix);
 			 var dates = timestamp.format("MM-DD-YYYY");
-			 console.log(dates);
 			 items.push(dates);
 		 }
 		 items.push("</td>");
@@ -86,6 +101,7 @@ $(document).ready(function () {
 		 	items.push("</td>");
 		 }
 
+
 		 //Add Name
 		 items.push("<td class='name'>");
 		 items.push(valid[index].projectName);
@@ -108,6 +124,8 @@ $(document).ready(function () {
 
  function processWeirdData(data) {
 	 weird = data.weirdTickets;
+	 var count = Object.keys(weird).length;
+	 getNote("weird",count);
 	 $.each(weird, function(index) { //loop through each project
 		 var items = [];
 		 items.push("<tr>");
@@ -168,29 +186,46 @@ $(document).ready(function () {
  	 request.onload = function () {
  		  var status = request.status;
 			if (status == 401) {
+				window.location.href = "https://www.holonet.sdsc.edu:8134/ProjectCreation/login.html";
 				return;
 			}
-			var id = request.responseText;
-			localStorage.setItem("token",id);
+ 		   var id = request.responseText;
+		   localStorage.setItem("token",id);
  	 }
-
 	 request.open(method, url, a_sync);
-	 request.setRequestHeader('Authorization', window.btoa("syeu" +":"+"6St12Sin"));
+	 request.setRequestHeader('Authorization', window.btoa("test" +":"+"test"));
 	 request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	 request.send();
 
 
  }
 
+
+
 $(document).on("click",".email" ,function() {
 	var $item = $(this).closest("tr").find(".name").text();
-	$(this).closest("tr").hide();
-	var url = "http://holonet.sdsc.edu:8134/" + $item;
+	console.log($(this).parent());
+	var url = "https://holonet.sdsc.edu:8134/" + $item;
 	var method = "POST";
 	var a_sync = true;
 	var request = new XMLHttpRequest();
+	var token = localStorage.getItem("loginToken");
 	request.onload = function () {
 		var status = request.status;
+		if (status != 200) {
+			$.notifyBar({
+        		cssClass: "error",
+        		html: "Error occurred! Email not sent"
+    		});
+		}
+		else {
+			$.notifyBar({
+        		cssClass: "success",
+        		html: "Email has been sent "
+    		});
+    		$(this).closest("tr").hide();
+
+		}
 		var data = request.responseText;
 	}
 	request.open(method, url, a_sync);

@@ -12,15 +12,18 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
+
         <style>
             body {
                 padding-top: 50px;
                 padding-bottom: 20px;
             }
         </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
         <link rel="stylesheet" href="css/main.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/jquery.notifyBar.css">
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
@@ -28,9 +31,10 @@
         <script src="js/main.js"></script>
         <script src="js/moment.js"></script>
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <script src="js/jquery.notifyBar.js"></script>
+
     </head>
     <body>
-
 
       <div class="container">
           <div class="row">
@@ -43,7 +47,9 @@
                           <h3 class="panel-title">Valid Projects</h3>
                         </div>
                         <div class="col col-xs-6 text-right">
-                          <button type="button" class="btn btn-sm btn-primary btn-create" onclick="update()">Update</button>
+                    		<button type="button" class="btn btn-sm btn-primary btn-create">Emails
+                    		<span id="valid-count" class="badge"></span>
+                    		</button>
                         </div>
                       </div>
                     </div>
@@ -86,6 +92,11 @@
                         <div class="col col-xs-6">
                           <h3 class="panel-title">Weird Tickets</h3>
                         </div>
+                        <div class="col col-xs-6 text-right">
+                    		<button type="button" class="btn btn-primary">Emails
+                    		<span id="weird-count" class="badge"></span>
+                    		</button>
+                  		</div>
                       </div>
                     </div>
                     <div class="panel-body">
